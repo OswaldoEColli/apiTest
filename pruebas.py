@@ -1,20 +1,22 @@
-from flask import Flask, jsonify, request
-from flask import Blueprint
+from flask import jsonify
+from flask_restx import Namespace, Resource
 
-pruebas_api = Blueprint ('pruebas_api', __name__)
+api = Namespace("pruebas", description="Rutas de prueba")
 
-@pruebas_api.route("/")
-def prueba ():
-    return "prueba"
+@api.route("/")
+class Prueba(Resource):
+    def get(self):
+        """Devuelve un mensaje de prueba"""
+        return "prueba"
 
-@pruebas_api.route("/usuarios")
-def prueba2 ():
-    return "esta es la ventana de usuarios, SI"
+@api.route("/usuarios")
+class Usuarios(Resource):
+    def get(self):
+        """Devuelve un mensaje de usuarios"""
+        return "esta es la ventana de usuarios"
 
-@pruebas_api.route("/json")
-def prueba3 ():
-    prueba = {
-        "nombre" : "api-restaaaa"
-    }
-    return jsonify(prueba)
-
+@api.route("/json")
+class JsonTest(Resource):
+    def get(self):
+        """Devuelve un JSON de prueba"""
+        return jsonify({"nombre": "api-rest"})
